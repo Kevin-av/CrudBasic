@@ -1,7 +1,10 @@
 package com.example.Base_1.service
 
+import com.example.Base_1.model.Product
 import com.example.Base_1.model.Ventas
+import com.example.Base_1.repository.ProductRepository
 import com.example.Base_1.repository.VentasRepository
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -15,11 +18,19 @@ class VentasService {
     }
 
     fun save(product: Ventas): Ventas {
-        try{
-            return ventasRepository.save(product)
+        try {
+            val id = product.description?.trim() ?: ""
+            if (id.isEmpty()) {
+                throw Exception("El campo 'description' no debe estar vacío")
+            }
+        } catch (ex: Exception) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.message, ex)
         }
-        catch (ex:Exception){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
+
+        try {
+            return ventasRepository.save(product)
+        } catch (ex: Exception) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
 

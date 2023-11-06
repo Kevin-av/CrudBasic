@@ -13,3 +13,4 @@ CREATE TABLE IF NOT EXISTS ventas (
     PRIMARY KEY (id),
     FOREIGN KEY (product_id ) REFERENCES product(id)
 );
+

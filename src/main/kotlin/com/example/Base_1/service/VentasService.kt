@@ -1,10 +1,7 @@
 package com.example.Base_1.service
 
-import com.example.Base_1.model.Product
 import com.example.Base_1.model.Ventas
-import com.example.Base_1.repository.ProductRepository
 import com.example.Base_1.repository.VentasRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException

@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name = "ventas")
@@ -14,7 +15,9 @@ class Ventas {
     @Id
     @Column(updatable = false)
     var id: Long? = null
+    @NotBlank(message = "Campos obiglatorio")
     var description: String? = null
+    @NotBlank(message = "Campos obiglatorio")
     var category: String? = null
-    var product_id: String? = null
+    var productID: String? = null
 }

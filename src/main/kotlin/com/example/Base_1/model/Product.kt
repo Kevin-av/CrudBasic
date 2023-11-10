@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name = "product")
@@ -14,6 +15,8 @@ class Product {
     @Id
     @Column(updatable = false)
     var id: Long? = null
-    var description: String? = null
+    @NotBlank(message="Campo Obligatorio")
+    var description: String? =null
+    @NotBlank(message="Campo Obligatorio")
     var category: String? = null
 }

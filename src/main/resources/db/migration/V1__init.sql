@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS ventas (
     id SERIAL,
     description VARCHAR(100) NOT NULL,
     category VARCHAR(100) NOT NULL,
-    product_id INT NOT NULL,
+    productID INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (product_id ) REFERENCES product(id)
+    FOREIGN KEY (productID ) REFERENCES product(id)
 );
 

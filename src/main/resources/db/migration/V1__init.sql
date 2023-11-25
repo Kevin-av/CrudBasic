@@ -1,16 +1,41 @@
-CREATE TABLE IF NOT EXISTS product (
+CREATE TABLE IF NOT EXISTS client (
     id SERIAL,
-    description VARCHAR(100) NOT NULL,
-    category VARCHAR(100) NOT NULL,
+    fullname VARCHAR(100) NOT NULL,
+    address VARCHAR(100) NOT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS ventas (
+CREATE TABLE IF NOT EXISTS invoice (
     id SERIAL,
-    description VARCHAR(100) NOT NULL,
-    category VARCHAR(100) NOT NULL,
-    productID INT NOT NULL,
+    code VARCHAR(100) NOT NULL,
+    create_at TIMESTAMP NOT NULL,
+    total VARCHAR(100) NOT NULL,
+    clientID INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (productID ) REFERENCES product(id)
+    FOREIGN KEY (clientID) REFERENCES client(id)
 );
 
+CREATE TABLE IF NOT EXISTS detail (
+    id SERIAL,
+    quantity VARCHAR(100) NOT NULL,
+    price VARCHAR(100) NOT NULL,
+    invoiceID INT NOT NULL,
+    productID INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (invoiceID) REFERENCES invoice(id),
+    FOREIGN KEY (productID) REFERENCES product(id)
+);
+
+CREATE TABLE IF NOT EXISTS product (
+    id SERIAL,
+    description VARCHAR(100) NOT NULL,
+    brand VARCHAR(100) NOT NULL,
+    price VARCHAR(100) NOT NULL,
+    stock VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE VIEW invoice_view as
+    SELECT i*, c.full_name
+    FROM invoice i
+    JOIN client c ON c.id = i.clientID

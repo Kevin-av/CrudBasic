@@ -1,65 +1,65 @@
 package com.example.Base_1.service
 
-import com.example.Base_1.model.Product
-import com.example.Base_1.repository.ProductRepository
+import com.example.Base_1.model.Client
+import com.example.Base_1.repository.ClientRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class ProductService {
+class ClientService {
     @Autowired
-    lateinit var productRepository: ProductRepository
+    lateinit var clientRepository: ClientRepository
 
-    fun list ():List<Product>{
-        return productRepository.findAll()
+    fun list ():List<Client>{
+        return clientRepository.findAll()
     }
 
-    fun save(product: Product): Product {
+    fun save(client: Client): Client {
         try{
-            return productRepository.save(product)
+            return clientRepository.save(client)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
 
-    fun update(product: Product): Product{
+    fun update(client: Client): Client{
         try {
-            productRepository.findById(product.id)
+            clientRepository.findById(client.id)
                     ?: throw Exception("ID no existe")
 
-            return productRepository.save(product)
+            return clientRepository.save(client)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
 
-    fun updateName(product: Product): Product{
+    fun updateName(client: Client): Client{
         try{
-            val response = productRepository.findById(product.id)
+            val response = clientRepository.findById(client.id)
                     ?: throw Exception("ID no existe")
             response.apply {
-                description=product.description //un atributo del modelo
+                fullname=client.fullname //un atributo del modelo
             }
-            return productRepository.save(response)
+            return clientRepository.save(response)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
 
-    fun listById (id:Long?):Product?{
-        return productRepository.findById(id)
+    fun listById (id:Long?):Client?{clientRepository
+        return clientRepository.findById(id)
     }
 
     fun delete (id: Long?):Boolean?{
         try{
-            val response = productRepository.findById(id)
+            val response = clientRepository.findById(id)
                     ?: throw Exception("ID no existe")
-            productRepository.deleteById(id!!)
+            clientRepository.deleteById(id!!)
             return true
         }
         catch (ex:Exception){

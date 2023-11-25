@@ -9,18 +9,18 @@ import jakarta.persistence.Table
 import jakarta.validation.constraints.NotBlank
 
 @Entity
-@Table(name = "product")
-class Product {
+@Table(name = "invoice")
+class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(updatable = false)
     var id: Long? = null
     @NotBlank(message="Campo Obligatorio")
-    var description: String? =null
+    var code: String? =null
     @NotBlank(message="Campo Obligatorio")
-    var brand: String? = null
+    var create_at: String? = null
     @NotBlank(message="Campo Obligatorio")
-    var price: String? = null
+    var total: String? = null
     @NotBlank(message="Campo Obligatorio")
-    var stock: String? = null
+    var clientID: String? = null
 }

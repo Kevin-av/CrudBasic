@@ -18,11 +18,12 @@ CREATE TABLE IF NOT EXISTS invoice (
     id SERIAL,
     code VARCHAR(100) NOT NULL,
     create_at TIMESTAMP NOT NULL,
-    total VARCHAR(100) NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
     clientID INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (clientID) REFERENCES client(id)
 );
+
 
 CREATE TABLE IF NOT EXISTS detail (
     id SERIAL,

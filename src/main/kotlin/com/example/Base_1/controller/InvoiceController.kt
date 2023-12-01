@@ -22,17 +22,29 @@ class InvoiceController(private val invoiceService: InvoiceService) {
     fun update(@RequestBody invoice: Invoice): ResponseEntity<Invoice> =
             ResponseEntity.ok(invoiceService.update(invoice))
 
-    @PatchMapping
+    @PatchMapping("/updateName") // Corrección en el nombre del método
     fun updateName(@RequestBody invoice: Invoice): ResponseEntity<Invoice> =
-            ResponseEntity.ok(invoiceService.update(invoice))
+            ResponseEntity.ok(invoiceService.updateName(invoice))
 
     @GetMapping("/{id}")
-    fun listById(@PathVariable("id") id: Long): ResponseEntity<*> =
-            ResponseEntity.ok(invoiceService.listById(id))
+    fun listById(@PathVariable id: Long): ResponseEntity<*> {
+        val invoice = invoiceService.listById(id)
+        return if (invoice != null) {
+            ResponseEntity.ok(invoice)
+        } else {
+            ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(JSendResponse(status = "fail", data = null, message = "Invoice not found"))
+        }
+    }
 
     @DeleteMapping("/delete/{id}")
-    fun delete(@PathVariable("id") id: Long): ResponseEntity<Unit> {
+    fun delete(@PathVariable id: Long): ResponseEntity<Unit> {
         invoiceService.delete(id)
         return ResponseEntity.noContent().build()
+    }
+
+    @GetMapping("/filter-total/{value}")
+    fun listTotals(@PathVariable("value") value: Double?): ResponseEntity<*> {
+        return ResponseEntity(invoiceService.filterTotal(value), HttpStatus.OK)
     }
 }

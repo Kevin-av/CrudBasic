@@ -27,5 +27,5 @@ class Invoice(
         var total: Double? = null, // Assuming it's a numeric field
 
         @NotBlank(message = "Campo Obligatorio")
-        var clientID: String? = null
+        var clientID: Int? = null
 )

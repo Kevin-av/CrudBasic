@@ -10,17 +10,21 @@ import jakarta.validation.constraints.NotBlank
 
 @Entity
 @Table(name = "product")
-class Product {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(updatable = false)
-    var id: Long? = null
-    @NotBlank(message="Campo Obligatorio")
-    var description: String? =null
-    @NotBlank(message="Campo Obligatorio")
-    var brand: String? = null
-    @NotBlank(message="Campo Obligatorio")
-    var price: String? = null
-    @NotBlank(message="Campo Obligatorio")
-    var stock: String? = null
-}
+class Product(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(updatable = false)
+        var id: Long? = null,
+
+        @NotBlank(message = "Campo Obligatorio")
+        var description: String? = null,
+
+        @NotBlank(message = "Campo Obligatorio")
+        var brand: String? = null,
+
+        @NotBlank(message = "Campo Obligatorio")
+        var price: Double? = null, // Assuming it's a numeric field
+
+        @NotBlank(message = "Campo Obligatorio")
+        var stock: Int? = null // Assuming it's a numeric field
+)

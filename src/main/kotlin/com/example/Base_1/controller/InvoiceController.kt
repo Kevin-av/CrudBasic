@@ -2,57 +2,37 @@ package com.example.Base_1.controller
 
 import com.example.Base_1.model.Invoice
 import com.example.Base_1.service.InvoiceService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 @RestController
-@RequestMapping("/client")   //endpoint
-class InvoiceController {
-    @Autowired
-    lateinit var invoiceService: InvoiceService
+@RequestMapping("/invoice")
+class InvoiceController(private val invoiceService: InvoiceService) {
 
     @GetMapping
-    fun list ():List <Invoice>{
-        return invoiceService.list()
-    }
+    fun list(): List<Invoice> = invoiceService.list()
 
     @PostMapping
-    fun save (@RequestBody invoice: Invoice):ResponseEntity<Invoice>{
-        return ResponseEntity(invoiceService.save(invoice), HttpStatus.OK)
-    }
+    fun save(@RequestBody invoice: Invoice): ResponseEntity<Invoice> =
+            ResponseEntity.ok(invoiceService.save(invoice))
 
     @PutMapping
-    fun update (@RequestBody invoice: Invoice):ResponseEntity<Invoice>{
-        return ResponseEntity(invoiceService.update(invoice), HttpStatus.OK)
-    }
+    fun update(@RequestBody invoice: Invoice): ResponseEntity<Invoice> =
+            ResponseEntity.ok(invoiceService.update(invoice))
 
     @PatchMapping
-    fun updateName (@RequestBody invoice: Invoice):ResponseEntity<Invoice>{
-        return ResponseEntity(invoiceService.update(invoice), HttpStatus.OK)
-    }
+    fun updateName(@RequestBody invoice: Invoice): ResponseEntity<Invoice> =
+            ResponseEntity.ok(invoiceService.update(invoice))
 
     @GetMapping("/{id}")
-    fun listById (@PathVariable("id") id: Long): ResponseEntity<*>{
-        return ResponseEntity(invoiceService.listById (id), HttpStatus.OK)
-
-    }
+    fun listById(@PathVariable("id") id: Long): ResponseEntity<*> =
+            ResponseEntity.ok(invoiceService.listById(id))
 
     @DeleteMapping("/delete/{id}")
-    fun delete (@PathVariable("id") id: Long):Boolean?{
-        return invoiceService.delete(id)
+    fun delete(@PathVariable("id") id: Long): ResponseEntity<Unit> {
+        invoiceService.delete(id)
+        return ResponseEntity.noContent().build()
     }
-
 }

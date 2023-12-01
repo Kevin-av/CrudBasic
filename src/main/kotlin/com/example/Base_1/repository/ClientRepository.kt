@@ -8,4 +8,3 @@ import org.springframework.stereotype.Repository
 interface ClientRepository : JpaRepository<Client, Long?> {
     fun findById (id: Long?): Client?
 }
-

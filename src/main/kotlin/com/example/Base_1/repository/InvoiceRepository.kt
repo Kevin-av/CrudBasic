@@ -8,4 +8,3 @@ import org.springframework.stereotype.Repository
 interface InvoiceRepository : JpaRepository<Invoice, Long?> {
     fun findById (id: Long?): Invoice?
 }
-

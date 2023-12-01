@@ -2,57 +2,42 @@ package com.example.Base_1.controller
 
 import com.example.Base_1.model.Client
 import com.example.Base_1.service.ClientService
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+
 
 @CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 @RestController
-@RequestMapping("/client")   //endpoint
-class ClientController {
-    @Autowired
-    lateinit var clientService: ClientService
+@RequestMapping("/client")
+class ClientController(private val clientService: ClientService) {
 
     @GetMapping
-    fun list ():List <Client>{
-        return clientService.list()
+    fun list (model: Client, pageable: Pageable):ResponseEntity<*>{
+        val response= clientService.list(pageable, model)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     @PostMapping
-    fun save (@RequestBody client: Client):ResponseEntity<Client>{
-        return ResponseEntity(clientService.save(client), HttpStatus.OK)
-    }
+    fun save(@RequestBody client: Client): ResponseEntity<Client> =
+            ResponseEntity.ok(clientService.save(client))
 
     @PutMapping
-    fun update (@RequestBody client: Client):ResponseEntity<Client>{
-        return ResponseEntity(clientService.update(client), HttpStatus.OK)
-    }
+    fun update(@RequestBody client: Client): ResponseEntity<Client> =
+            ResponseEntity.ok(clientService.update(client))
 
     @PatchMapping
-    fun updateName (@RequestBody client: Client):ResponseEntity<Client>{
-        return ResponseEntity(clientService.update(client), HttpStatus.OK)
-    }
+    fun updateName(@RequestBody client: Client): ResponseEntity<Client> =
+            ResponseEntity.ok(clientService.update(client))
 
     @GetMapping("/{id}")
-    fun listById (@PathVariable("id") id: Long): ResponseEntity<*>{
-        return ResponseEntity(clientService.listById (id), HttpStatus.OK)
-
-    }
+    fun listById(@PathVariable("id") id: Long): ResponseEntity<*> =
+            ResponseEntity.ok(clientService.listById(id))
 
     @DeleteMapping("/delete/{id}")
-    fun delete (@PathVariable("id") id: Long):Boolean?{
-        return clientService.delete(id)
+    fun delete(@PathVariable("id") id: Long): ResponseEntity<Unit> {
+        clientService.delete(id)
+        return ResponseEntity.noContent().build()
     }
-
 }

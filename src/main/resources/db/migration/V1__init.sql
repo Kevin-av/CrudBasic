@@ -5,6 +5,15 @@ CREATE TABLE IF NOT EXISTS client (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS product (
+    id SERIAL,
+    description VARCHAR(100) NOT NULL,
+    brand VARCHAR(100) NOT NULL,
+    price VARCHAR(100) NOT NULL,
+    stock VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS invoice (
     id SERIAL,
     code VARCHAR(100) NOT NULL,
@@ -25,17 +34,3 @@ CREATE TABLE IF NOT EXISTS detail (
     FOREIGN KEY (invoiceID) REFERENCES invoice(id),
     FOREIGN KEY (productID) REFERENCES product(id)
 );
-
-CREATE TABLE IF NOT EXISTS product (
-    id SERIAL,
-    description VARCHAR(100) NOT NULL,
-    brand VARCHAR(100) NOT NULL,
-    price VARCHAR(100) NOT NULL,
-    stock VARCHAR(100) NOT NULL,
-    PRIMARY KEY (id)
-);
-
-CREATE VIEW invoice_view as
-    SELECT i*, c.full_name
-    FROM invoice i
-    JOIN client c ON c.id = i.clientID

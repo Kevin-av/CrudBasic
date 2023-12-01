@@ -1,5 +1,6 @@
 package com.example.Base_1.controller
 
+import com.example.Base_1.dto.ProductDto
 import com.example.Base_1.model.Product
 import com.example.Base_1.service.ProductService
 import org.springframework.data.domain.Pageable
@@ -21,6 +22,11 @@ class ProductController(private val productService: ProductService) {
     @PostMapping
     fun save(@RequestBody product: Product): ResponseEntity<Product> =
             ResponseEntity.ok(productService.save(product))
+
+    @GetMapping("/List-dto")
+    fun listDto(): ResponseEntity<*>{
+        return ResponseEntity(productService.listDto(), HttpStatus.OK)
+    }
 
     @PutMapping
     fun update(@RequestBody product: Product): ResponseEntity<Product> =

@@ -1,5 +1,6 @@
 package com.example.Base_1.model
 
+import com.example.Base_1.mapper.ProductMapper
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -28,3 +29,4 @@ class Product(
         @NotBlank(message = "Campo Obligatorio")
         var stock: Int? = null // Assuming it's a numeric field
 )
+

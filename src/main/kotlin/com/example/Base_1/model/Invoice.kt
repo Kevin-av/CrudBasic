@@ -29,3 +29,9 @@ class Invoice(
         @NotBlank(message = "Campo Obligatorio")
         var clientID: Int? = null
 )
+
+data class JSendResponse<T>(
+        val status: String,
+        val data: T?,
+        val message: String?
+)

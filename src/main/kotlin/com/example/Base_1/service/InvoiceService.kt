@@ -55,8 +55,7 @@ class InvoiceService @Autowired constructor(private val invoiceRepository: Invoi
         with(invoice) {
             code?.takeIf { it.isNotBlank() }
                     ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El código de la factura no debe ser nulo o vacío")
-            create_at?.takeIf { it.isNotBlank() }
-                    ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha de creación no debe ser nulo o vacía")
+            create_at ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha de creación no debe ser nula")
             total?.takeIf { it >= 0 }
                     ?: throw ResponseStatusException(HttpStatus.BAD_REQUEST, "El total de la factura no debe ser negativo")
         }
